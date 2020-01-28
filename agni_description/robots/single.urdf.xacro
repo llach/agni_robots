@@ -6,6 +6,7 @@
 	<xacro:arg name="ARM" default="-"/>
 	<xacro:arg name="TOOL" default="-"/>
 	<xacro:arg name="PARENT" default="world"/>
+	<xacro:arg name="FIX_HANDS" default="1"/>
 
 	<xacro:arg name="PREFIX" default="-"/>
 	<xacro:arg name="SIM" default="1"/>
@@ -36,6 +37,10 @@
 	</xacro:if>
 
 	<xacro:include filename="../urdf/helpers.urdf.xacro" />
+
+	<xacro:if value="$(arg FIX_HANDS)">
+		<xacro:include filename="../urdf/shadow_fix.urdf.xacro"/>
+	</xacro:if>
 
 	<!-- SINGLE ARM with TOOL -->
 	<xacro:property name="PREFIX" value="$(arg PREFIX)"/>
