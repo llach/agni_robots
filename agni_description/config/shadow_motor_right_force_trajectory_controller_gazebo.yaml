@@ -1,5 +1,5 @@
 rh_hand_force_trajectory_controller:
-  type: "hand_force_position_controller/HandForceTrajectoryRealController"
+  type: "hand_force_position_controller/HandForceTrajectorySimController"
   joints:
     - rh_FFJ1
     - rh_FFJ2
