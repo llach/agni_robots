@@ -5,7 +5,10 @@
   <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.tactile.xacro" />
 
   <xacro:macro name="shadow_hand" params="model:=${props.get('model','motor')}
-                                          tactile:=${props.get('tactile','ubi')}
+                                          tip_sensor:=${props.get('tip_sensor','ubi')}
+                                          mid_sensor:=${props.get('mid_sensor','ubi')}
+                                          prox_sensor:=${props.get('prox_sensor','ubi')}
+                                          palm_sensor:=${props.get('palm_sensor','ubi_fabric')}
                                           side:=${props.get('side','right')}
                                           prefix:=''
                                           lf:=${props.get('lf','True')} ">
@@ -13,13 +16,12 @@
     <xacro:property name="prefix_" value="${'' if prefix=='' else prefix+'_'}"/>
     <xacro:shadowhand muscletrans="${'trans' in model}"
                       muscle="${'muscle' in model}"
-                      bio="${'bio' in tactile}"
-                      bt_sp="${'bt_stp' in tactile}"
-                      ubi="${'ubi' in tactile}"
-                      eli="${'eli' in tactile}"
+                      tip_sensor="${tip_sensor}"
+                      mid_sensor="${mid_sensor}"
+                      prox_sensor="${prox_sensor}"
+                      palm_sensor="${palm_sensor}"
                       reflect="${1 if side=='right' else -1}"
-                      prefix="${prefix_}"
-                      lf="${lf}" />
+                      prefix="${prefix_}" />
 
     <!-- add tool frame -->
     <joint name="${prefix_}tool_frame" type="fixed">
