@@ -4,8 +4,10 @@
   <arg name="sim" default="1"/>
   <arg name="calib" default="default"/>
   <arg name="prefix" default="prefix"/>
+  <arg name="remoteIP" default="$(optenv remoteIP 127.0.0.1) "/>
 
   <!-- load robot_description -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' 
+  <param name="robot_description" command="xacro '$(find agni_description)/robots/single.urdf.xacro' 
           PREFIX:=$(arg prefix) ARM:=$(arg arm_type) SIM:=$(arg sim) CALIB:=$(arg calib)" />
+  <param name="remoteIP" value="$(arg remoteIP)"/>
 </launch>

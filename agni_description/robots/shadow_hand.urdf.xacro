@@ -5,20 +5,19 @@
   <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.tactile.xacro" />
 
   <xacro:macro name="shadow_hand" params="model:=${props.get('model','motor')}
-                                          tip_sensor:=${props.get('tip_sensor','ubi')}
-                                          mid_sensor:=${props.get('mid_sensor','ubi')}
-                                          prox_sensor:=${props.get('prox_sensor','ubi')}
+                                          tip_sensors:=${props.get('tip_sensor',['ubi','ubi','ubi','ubi','ubi'])}
+                                          mid_sensors:=${props.get('mid_sensor',['ubi','ubi','ubi','ubi','ubi'])}
+                                          prox_sensors:=${props.get('prox_sensor',['ubi','ubi','ubi','ubi','ubi'])}
                                           palm_sensor:=${props.get('palm_sensor','ubi_fabric')}
                                           side:=${props.get('side','right')}
-                                          prefix:=''
-                                          lf:=${props.get('lf','True')} ">
+                                          prefix:='' ">
     <xacro:property name="ns" value="${prefix}"/>
     <xacro:property name="prefix_" value="${'' if prefix=='' else prefix+'_'}"/>
-    <xacro:shadowhand muscletrans="${'trans' in model}"
-                      muscle="${'muscle' in model}"
-                      tip_sensor="${tip_sensor}"
-                      mid_sensor="${mid_sensor}"
-                      prox_sensor="${prox_sensor}"
+    <xacro:property name="hand_type" value="${'hand_e' if model=='motor' else 'hand_m' if model=='muscle' else model}"/>
+    <xacro:shadowhand hand_type="${hand_type}"                      
+                      tip_sensors="${tip_sensors}"
+                      mid_sensors="${mid_sensors}"
+                      prox_sensors="${prox_sensors}"
                       palm_sensor="${palm_sensor}"
                       reflect="${1 if side=='right' else -1}"
                       prefix="${prefix_}" />
@@ -33,8 +32,7 @@
 
     <!-- add tactile markers -->
     <xacro:shadowhand_tactile reflect="${1 if side=='right' else -1}"
-                              prefix="${prefix_}"
-                              lf="${lf}" />
+                              prefix="${prefix_}"/>
 
     <xacro:shadow_gazebo_controller_manager namespace="${prefix}" />
   </xacro:macro>
